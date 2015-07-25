@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    internal interface IRepository<TEntity>
+    public interface IRepository<TEntity>
         where TEntity : IEntity
     {
         IList<TEntity> GetAll();
