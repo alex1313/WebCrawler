@@ -17,7 +17,7 @@
             var appSettings = ConfigurationManager.AppSettings;
             string email;
             string password;
-            
+
             var isConsoleAuthorization = bool.Parse(appSettings[AuthorizationConsoleAuthorizationSettingsField]);
             if (isConsoleAuthorization)
             {
@@ -35,6 +35,7 @@
 
             var api = new VkApi();
             api.Authorize(applicationId, email, password, settings);
+            Console.WriteLine("\nAuthorized");
         }
 
         private static void ConsoleAuthorization(out string email, out string password)
