@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using System.Linq;
     using DataAccess;
     using VkNet;
     using VkNet.Enums.Filters;
@@ -29,9 +30,9 @@
             while (true)
             {
                 var randomFriendId = friends[Random.Next(friends.Count)].Id;
-                var friend = Api.Users.Get(randomFriendId, ProfileFields.BirthDate);
+                var person = Api.Users.Get(randomFriendId, ProfileFields.BirthDate);
 
-                var birthday = friend.BirthDate;
+                var birthday = person.BirthDate;
                 if (birthday == null || birthday.Split('.').Length < 3)
                     continue;
 
@@ -40,9 +41,15 @@
 
                 var age = DateTime.Now.Year - dateTimeBirthday.Year;
 
+                var friendsCount = 0;
                 try
                 {
-                    friends = Api.Friends.Get(friend.Id);
+                    var personFriends = Api.Friends.Get(person.Id);
+                    if (personFriends.Any())
+                    {
+                        friendsCount = friends.Count;
+                        friends = personFriends;
+                    }
                 }
                 catch (AccessDeniedException)
                 {
@@ -50,8 +57,8 @@
 
                 Repository.Insert(new User
                 {
-                    FriendsCount = friends.Count,
-                    VkId = friend.Id,
+                    FriendsCount = friendsCount,
+                    VkId = person.Id,
                     Age = age
                 });
             }

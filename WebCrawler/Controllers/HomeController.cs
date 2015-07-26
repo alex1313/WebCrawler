@@ -16,7 +16,7 @@
         {
             var model = _service.GetUsersDetails();
 
-            return View();
+            return View(model);
         }
     }
 }

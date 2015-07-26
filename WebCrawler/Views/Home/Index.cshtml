@@ -1,6 +1,12 @@
-﻿@{
+﻿@model WebCrawler.Models.UsersViewModel
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
+@foreach (var age in Model.AgeFriendsDictionary)
+{
+    <p>@age.Key : @age.Value</p>
+}
