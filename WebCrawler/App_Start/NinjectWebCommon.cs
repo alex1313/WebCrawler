@@ -12,6 +12,7 @@ namespace WebCrawler
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
+    using Services;
 
     public static class NinjectWebCommon
     {
@@ -50,6 +51,7 @@ namespace WebCrawler
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind(typeof (IRepository<>)).To(typeof (MongoRepository<>));
+            kernel.Bind<IUsersAnalyzeService>().To<AgeFriendsUsersAnalyzeService>();
         }
     }
 }
